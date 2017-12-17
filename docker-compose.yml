@@ -1,0 +1,43 @@
+version: '2'
+
+services:
+
+  registry-svc:
+    build:
+      dockerfile: registry/Dockerfile
+      context: ./
+    ports:
+      - "8761:8761"
+
+  gateway-svc:
+    build:
+        dockerfile: gateway/Dockerfile
+        context: ./
+    ports:
+      - "8080:8080"
+    links:
+      - registry-svc
+      - rest-svc-1
+      - rest-svc-2
+
+  rest-svc-1:
+    build:
+        dockerfile: service/Dockerfile
+        context: ./
+    environment:
+      - SERVER_PORT=8081
+    ports:
+      - "8081:8081"
+    links:
+      - registry-svc
+
+  rest-svc-2:
+    build:
+        dockerfile: service/Dockerfile
+        context: ./
+    environment:
+      - SERVER_PORT=8082
+    ports:
+      - "8082:8082"
+    links:
+      - registry-svc

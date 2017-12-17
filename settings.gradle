@@ -1,0 +1,5 @@
+rootProject.name = 'microservices-experiments'
+
+include 'service'
+include 'gateway'
+include 'registry'
