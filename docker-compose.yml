@@ -3,41 +3,43 @@ version: '2'
 services:
 
   registry-svc:
-    build:
-      dockerfile: Dockerfile
-      context: ./registry
+    image: microservices-experiments/registry:0.0.1-SNAPSHOT
     ports:
       - "8761:8761"
 
   gateway-svc:
-    build:
-        dockerfile: Dockerfile
-        context: ./gateway
+    image: microservices-experiments/gateway:0.0.1-SNAPSHOT
     ports:
       - "8080:8080"
-    links:
+    depends_on:
       - registry-svc
       - rest-svc-1
       - rest-svc-2
+      - rest-svc-3
 
   rest-svc-1:
-    build:
-        dockerfile: Dockerfile
-        context: ./service
+    image: microservices-experiments/service:0.0.1-SNAPSHOT
     environment:
       - SERVER_PORT=8081
     ports:
       - "8081:8081"
-    links:
+    depends_on:
       - registry-svc
 
   rest-svc-2:
-    build:
-        dockerfile: Dockerfile
-        context: ./service
+    image: microservices-experiments/service:0.0.1-SNAPSHOT
     environment:
       - SERVER_PORT=8082
     ports:
       - "8082:8082"
-    links:
+    depends_on:
+      - registry-svc
+
+  rest-svc-3:
+    image: microservices-experiments/service:0.0.1-SNAPSHOT
+    environment:
+      - SERVER_PORT=8083
+    ports:
+      - "8083:8083"
+    depends_on:
       - registry-svc
