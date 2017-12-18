@@ -2,17 +2,31 @@ version: '2'
 
 services:
 
-  registry-svc:
+  registry-svc1:
     image: microservices-experiments/registry:0.0.1-SNAPSHOT
+    environment:
+      - SERVER_PORT=8761
+      - SELF_OFFSET=1
+      - PEER_OFFSET=2
     ports:
       - "8761:8761"
+
+  registry-svc2:
+    image: microservices-experiments/registry:0.0.1-SNAPSHOT
+    environment:
+      - SERVER_PORT=8762
+      - SELF_OFFSET=2
+      - PEER_OFFSET=1
+    ports:
+      - "8762:8762"
 
   gateway-svc:
     image: microservices-experiments/gateway:0.0.1-SNAPSHOT
     ports:
       - "8080:8080"
     depends_on:
-      - registry-svc
+      - registry-svc1
+      - registry-svc2
       - rest-svc-1
       - rest-svc-2
       - rest-svc-3
@@ -24,7 +38,8 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - registry-svc
+      - registry-svc1
+      - registry-svc2
 
   rest-svc-2:
     image: microservices-experiments/service:0.0.1-SNAPSHOT
@@ -33,7 +48,8 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - registry-svc
+      - registry-svc1
+      - registry-svc2
 
   rest-svc-3:
     image: microservices-experiments/service:0.0.1-SNAPSHOT
@@ -42,4 +58,5 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      - registry-svc
+      - registry-svc1
+      - registry-svc2
