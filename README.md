@@ -1,7 +1,7 @@
 # microservices-experiments
 
 ## Description
-Exemple project with Spring Boot, Zuul, Eureka, Ribbon and Zipkin 
+Exemple project with Spring Boot, Zuul, Eureka, Ribbon, Hystrix and Zipkin 
 
 ## Build
 `gradle clean build buildDocker`
