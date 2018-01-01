@@ -1,9 +1,0 @@
-server:
-  port: ${SERVER_PORT:8761}
-
-eureka:
-  instance:
-    hostname: registry-svc${SELF_OFFSET:1}
-  client:
-    serviceUrl:
-      defaultZone: http://registry-svc${PEER_OFFSET:1}/eureka/

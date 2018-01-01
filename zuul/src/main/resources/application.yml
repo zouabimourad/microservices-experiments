@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: zuul
+
+
+server:
+  port: ${SERVER_PORT:8080}
+
+zuul:
+  routes:
+    product:
+      path: /rest/product/**
+      serviceId: product-service
+    order:
+      path: /rest/order/**
+      serviceId: order-service
+    customer:
+      path: /rest/account/**
+      serviceId: account-service
+
+ribbon:
+  eureka:
+    enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/

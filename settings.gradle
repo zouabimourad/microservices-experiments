@@ -1,5 +1,8 @@
 rootProject.name = 'microservices-experiments'
 
-include 'service'
-include 'gateway'
-include 'registry'
+include 'product-service'
+include 'account-service'
+include 'order-service'
+include 'zipkin'
+include 'zuul'
+include 'eureka'

@@ -1,0 +1,13 @@
+
+dependencies {
+	compile('org.springframework.cloud:spring-cloud-starter')
+    compile('org.springframework.cloud:spring-cloud-starter-eureka')
+	compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.cloud:spring-cloud-starter-zuul')
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+	compile('io.zipkin.java:zipkin-server')
+	runtime('io.zipkin.java:zipkin-autoconfigure-ui')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
