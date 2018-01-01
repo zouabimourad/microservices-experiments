@@ -9,6 +9,11 @@ Exemple project with Spring Boot, Zuul, Eureka, Ribbon and Zipkin
 ## Run
 `docker-compose up`
 
+
+**Eureka GUI** : http://localhost:8761
+
+**Zipkin GUI** : http://localhost:9411
+
 ## Test
 
 ```

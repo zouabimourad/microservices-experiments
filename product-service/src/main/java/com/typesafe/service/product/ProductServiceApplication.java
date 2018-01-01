@@ -16,7 +16,6 @@ public class ProductServiceApplication {
 		SpringApplication.run(ProductServiceApplication.class, args);
 	}
 
-
 	@Bean
 	public AlwaysSampler defaultSampler() {
 		return new AlwaysSampler();

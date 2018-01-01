@@ -3,11 +3,12 @@ package com.typesafe.service.order.service;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
 @Getter
-@NoArgsConstructor
+
 @ToString
 public class Order {
 
@@ -15,8 +16,7 @@ public class Order {
     String accountName;
     LocalDateTime timestamp;
 
-    @NonNull
-    List<OrderDetail> details;
+    List<OrderDetail> details = new ArrayList<>();
 
-    double total;
+    double total = 0.0;
 }
