@@ -1,5 +1,6 @@
 rootProject.name = 'microservices-experiments'
 
+include 'common'
 include 'product-service'
 include 'account-service'
 include 'order-service'

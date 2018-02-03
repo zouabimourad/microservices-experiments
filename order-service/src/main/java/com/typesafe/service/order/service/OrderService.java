@@ -1,27 +1,20 @@
 package com.typesafe.service.order.service;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.typesafe.common.Account;
+import com.typesafe.common.Product;
 import com.typesafe.service.order.common.AccountNotFoundException;
+import com.typesafe.service.order.common.ProductNotFoundException;
 import com.typesafe.service.order.controller.OrderDetailRequest;
 import com.typesafe.service.order.controller.OrderRequest;
-import com.typesafe.service.order.common.ProductNotFoundException;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class OrderService {
@@ -36,19 +29,19 @@ public class OrderService {
 
     public void process(OrderRequest orderRequest) throws AccountNotFoundException, ProductNotFoundException {
 
-        Map<String, Object> account = orderServiceDelegate.getAccountDetails(orderRequest.getAccountIdentifier()).orElseThrow(() -> new AccountNotFoundException());
+        Account account = orderServiceDelegate.getAccountDetails(orderRequest.getAccountIdentifier()).orElseThrow(() -> new AccountNotFoundException());
 
         Order order = new Order();
 
-        order.setAccountName(account.get("firstName") + " " + account.get("lastName"));
+        order.setAccountName(account.getFirstName() + " " + account.getLastName());
 
         for (OrderDetailRequest orderDetailRequest : orderRequest.getDetails()) {
-            Map<String, Object> product = orderServiceDelegate.getProductDetails(orderDetailRequest.getProductCode()).orElseThrow(() -> new ProductNotFoundException());
+            Product  product = orderServiceDelegate.getProductDetails(orderDetailRequest.getProductCode()).orElseThrow(() -> new ProductNotFoundException());
 
 
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setProductCode(orderDetailRequest.getProductCode());
-            double price = (double) product.get("price");
+            double price = product.getPrice();
             orderDetail.setPrice(price);
             orderDetail.setCount(orderDetailRequest.getCount());
             double orderDetailTotalPrice = price * orderDetailRequest.getCount();

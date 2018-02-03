@@ -1,4 +1,4 @@
-package com.typesafe.service.product;
+package com.typesafe.common;
 
 import lombok.*;
 

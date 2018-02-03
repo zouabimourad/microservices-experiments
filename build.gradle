@@ -16,6 +16,7 @@ buildscript {
 subprojects {
 
 	apply plugin: 'java'
+	apply plugin: 'maven-publish'
 	apply plugin: 'org.springframework.boot'
 	apply plugin: "docker"
 
@@ -26,6 +27,18 @@ subprojects {
 
 	repositories {
 		mavenCentral()
+	}
+
+	publishing {
+		publications {
+			maven(MavenPublication) {
+				from components.java
+			}
+		}
+
+		repositories{
+			mavenLocal()
+		}
 	}
 
 	ext {

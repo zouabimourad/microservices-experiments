@@ -3,6 +3,8 @@ package com.typesafe.service.order.service;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.typesafe.common.Account;
+import com.typesafe.common.Product;
 import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -23,20 +24,20 @@ public class OrderServiceDelegate {
     @Autowired
     RestTemplate restTemplate;
 
-    Cache<String, Map<String, Object>> productCache = CacheBuilder.newBuilder()
+    Cache<String, Product> productCache = CacheBuilder.newBuilder()
             .maximumSize(100)
             .expireAfterWrite(15, TimeUnit.MINUTES)
             .build();
 
 
     @HystrixCommand(fallbackMethod = "getProductDetailsFromLocalCache")
-    public Optional<Map<String, Object>> getProductDetails(String code) {
+    public Optional<Product> getProductDetails(String code) {
 
         if (RandomUtils.nextInt(5) == 2) { // random fake error
             throw new RuntimeException();
         }
 
-        ResponseEntity<Map> productEntity = restTemplate.getForEntity("http://product-service/{identifier}", Map.class, code);
+        ResponseEntity<Product> productEntity = restTemplate.getForEntity("http://product-service/{identifier}", Product.class, code);
         if (productEntity.getStatusCode().is2xxSuccessful()) {
             if (productCache.getIfPresent(code) == null) {
                 productCache.put(code, productEntity.getBody());
@@ -47,14 +48,14 @@ public class OrderServiceDelegate {
         }
     }
 
-    public Optional<Map<String, Object>> getProductDetailsFromLocalCache(String code) {
+    public Optional<Product> getProductDetailsFromLocalCache(String code) {
         LOG.info("getProductDetailsFromLocalCache()");
         return Optional.ofNullable(productCache.getIfPresent(code));
 
     }
 
-    public Optional<Map<String, Object>> getAccountDetails(String identifier) {
-        ResponseEntity<Map> accountEntity = restTemplate.getForEntity("http://account-service/{identifier}", Map.class, identifier);
+    public Optional<Account> getAccountDetails(String identifier) {
+        ResponseEntity<Account> accountEntity = restTemplate.getForEntity("http://account-service/{identifier}", Account.class, identifier);
         if (accountEntity.getStatusCode().is2xxSuccessful()) {
             return Optional.of(accountEntity.getBody());
         } else {
