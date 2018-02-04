@@ -3,11 +3,14 @@ buildscript {
 	ext {
 		springBootVersion = '1.5.9.RELEASE'
 	}
+
 	repositories {
 		mavenCentral()
 	}
+
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE")
 		classpath("se.transmode.gradle:gradle-docker:1.2")
 	}
 
@@ -17,8 +20,8 @@ subprojects {
 
 	apply plugin: 'java'
 	apply plugin: 'maven-publish'
-	apply plugin: 'org.springframework.boot'
-	apply plugin: "docker"
+	apply plugin: "io.spring.dependency-management"
+
 
 	group = 'com.typesafe.microservices-experiments'
 	version = '0.0.1-SNAPSHOT'
@@ -27,6 +30,12 @@ subprojects {
 
 	repositories {
 		mavenCentral()
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom 'io.spring.platform:platform-bom:Brussels-SR6'
+		}
 	}
 
 	publishing {
@@ -41,8 +50,22 @@ subprojects {
 		}
 	}
 
+}
+
+configure([project(':order-service'),
+		   project(':product-service'),
+		   project(':account-service'),
+		   project(':zipkin'),
+		   project(':eureka'),
+		   project(':zuul')]) {
+
+
+	apply plugin: 'org.springframework.boot'
+	apply plugin: "docker"
+
+
 	ext {
-		springCloudVersion = 'Edgware.RELEASE'
+		springCloudVersion = 'Camden.SR7'
 	}
 
 	dependencyManagement {
