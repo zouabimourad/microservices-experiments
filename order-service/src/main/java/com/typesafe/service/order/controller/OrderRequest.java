@@ -7,6 +7,8 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrderRequest {
 
     String accountIdentifier;

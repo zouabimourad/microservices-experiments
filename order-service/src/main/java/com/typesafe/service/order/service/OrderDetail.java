@@ -1,14 +1,12 @@
 package com.typesafe.service.order.service;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
+@Builder
 public class OrderDetail {
 
     String productCode;

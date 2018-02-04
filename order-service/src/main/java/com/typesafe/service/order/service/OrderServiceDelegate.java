@@ -5,7 +5,6 @@ import com.google.common.cache.CacheBuilder;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.typesafe.common.Account;
 import com.typesafe.common.Product;
-import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +31,6 @@ public class OrderServiceDelegate {
 
     @HystrixCommand(fallbackMethod = "getProductDetailsFromLocalCache")
     public Optional<Product> getProductDetails(String code) {
-
-        if (RandomUtils.nextInt(5) == 2) { // random fake error
-            throw new RuntimeException();
-        }
 
         ResponseEntity<Product> productEntity = restTemplate.getForEntity("http://product-service/{identifier}", Product.class, code);
         if (productEntity.getStatusCode().is2xxSuccessful()) {
