@@ -21,14 +21,11 @@ services:
       - eureka
 
   zipkin:
-    image: microservices-experiments/zipkin:0.0.1-SNAPSHOT
+    image: openzipkin/zipkin
     environment:
-      - EUREKA_HOST=eureka
-      - EUREKA_PORT=8761
+      - STORAGE_TYPE=mem
     ports:
       - "9411:9411"
-    depends_on:
-      - eureka
 
   product-service:
     image: microservices-experiments/product-service:0.0.1-SNAPSHOT
