@@ -1,7 +1,7 @@
 # microservices-experiments
 
 ## Description
-Exemple project with Spring Boot, Zuul, Eureka, Ribbon, Hystrix and Zipkin 
+Example project with Spring Boot, Zuul, Eureka, Ribbon, Hystrix, Sleuth and Zipkin 
 
 ## Build
 `gradle clean build buildDocker`
@@ -16,25 +16,11 @@ Exemple project with Spring Boot, Zuul, Eureka, Ribbon, Hystrix and Zipkin
 
 ## Test
 
+```bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"accountIdentifier" : "mouradz", "details" : [{"productCode" : "iphone6","count" : 2},{"productCode" : "iphonex","count" : 2}]}' \
+  http://localhost:8080/rest/order
 ```
-POST http://localhost:8080/rest/order
-Content-Type: application/json
-
-{
-    "accountIdentifier" : "mouradz",
-    "details" : [
-        {
-           "productCode" : "iphone6",
-           "count" : 2
-        },
-        {
-            "productCode" : "iphonex",
-            "count" : 2
-        }
-    ]
-}
-```
-
-
 
 
