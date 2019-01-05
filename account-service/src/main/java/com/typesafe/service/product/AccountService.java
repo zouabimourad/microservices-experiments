@@ -1,8 +1,7 @@
 package com.typesafe.service.product;
 
 import com.typesafe.common.Account;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -12,9 +11,8 @@ import java.util.Optional;
 
 
 @Service
+@Slf4j
 public class AccountService {
-
-    private final static Logger LOG = LoggerFactory.getLogger(AccountService.class);
 
     private List<Account> accounts = new ArrayList<>();
 
@@ -24,12 +22,12 @@ public class AccountService {
     }
 
     public Optional<Account> findByIdentifier(String identifier) {
-        LOG.info("findByIdentifer({})", identifier);
+        log.info("findByIdentifer({})", identifier);
         return accounts.stream().filter(p -> p.getIdentifier().equals(identifier)).findFirst();
     }
 
     public List<Account> findAll() {
-        LOG.info("findAll()");
+        log.info("findAll()");
         return accounts;
     }
 }

@@ -1,8 +1,7 @@
 package com.typesafe.service.product;
 
 import com.typesafe.common.Account;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class AccountController {
 
-    private final static Logger LOG = LoggerFactory.getLogger(AccountController.class);
+    final AccountService accountService;
 
     @Autowired
-    AccountService accountService;
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @GetMapping("/{identifier}")
     public @ResponseBody
@@ -28,9 +30,9 @@ public class AccountController {
                 .orElseGet(ResponseEntity.notFound()::build);
     }
 
-    @GetMapping("")
+    @GetMapping()
     public @ResponseBody
-    ResponseEntity<List<Account>> procut() {
+    ResponseEntity<List<Account>> products() {
         return ResponseEntity.ok(accountService.findAll());
     }
 }

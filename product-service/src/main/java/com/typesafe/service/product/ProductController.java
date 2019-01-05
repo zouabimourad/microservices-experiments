@@ -1,8 +1,7 @@
 package com.typesafe.service.product;
 
 import com.typesafe.common.Product;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class ProductController {
 
-    private final static Logger LOG = LoggerFactory.getLogger(ProductController.class);
+    final ProductService productService;
 
     @Autowired
-    ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping("/{code}")
     public @ResponseBody
@@ -28,7 +30,7 @@ public class ProductController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("")
+    @GetMapping()
     public @ResponseBody
     ResponseEntity<List<Product>> procut() {
         return ResponseEntity.ok(productService.findAll());

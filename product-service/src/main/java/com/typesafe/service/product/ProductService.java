@@ -1,8 +1,7 @@
 package com.typesafe.service.product;
 
 import com.typesafe.common.Product;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -11,9 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ProductService {
-
-    private final static Logger LOG = LoggerFactory.getLogger(ProductService.class);
 
     List<Product> products = new ArrayList<>();
 
@@ -26,12 +24,12 @@ public class ProductService {
     }
 
     public Optional<Product> findByCode(String code) {
-        LOG.info("findByCode({})", code);
+        log.info("findByCode({})", code);
         return products.stream().filter(p -> p.getCode().equals(code)).findFirst();
     }
 
     public List<Product> findAll() {
-        LOG.info("findAll()");
+        log.info("findAll()");
         return products;
     }
 }
