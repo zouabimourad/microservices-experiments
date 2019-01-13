@@ -22,4 +22,7 @@ eureka:
     serviceUrl:
       defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
     register-with-eureka: false
-    registry-fetch-interval-seconds: 20
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000

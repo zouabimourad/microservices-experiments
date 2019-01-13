@@ -4,15 +4,17 @@
 Example project with Spring Boot, Zuul, Eureka, Ribbon, Hystrix, Sleuth and Zipkin 
 
 ## Build
-`gradle clean build buildDocker`
+`./gradlew clean build buildDocker`
 
 ## Run
 `docker-compose up`
 
 
-**Eureka GUI** : http://localhost:8761
+**Eureka Console** : http://localhost:8761
 
-**Zipkin GUI** : http://localhost:9411
+**Zipkin Console** : http://localhost:9411
+
+**Hystrix Dashboard Console (monitoring order-service hystrix stream)** : http://localhost:9500/hystrix/monitor?stream=http%3A%2F%2Forder-service%3A8083%2Factuator%2Fhystrix.stream
 
 ## Test
 

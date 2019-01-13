@@ -53,13 +53,12 @@ subprojects {
 configure([project(':order-service'),
 		   project(':product-service'),
 		   project(':account-service'),
+		   project(':zuul'),
 		   project(':eureka'),
-		   project(':zuul')]) {
-
+		   project(':hystrix-dashboard')]) {
 
 	apply plugin: 'org.springframework.boot'
 	apply plugin: "docker"
-
 
 	ext {
 		springCloudVersion = 'Finchley.RELEASE'

@@ -20,6 +20,13 @@ services:
     depends_on:
       - eureka
 
+  hystrix-dashboard:
+    image: microservices-experiments/hystrix-dashboard:0.0.1-SNAPSHOT
+    environment:
+      - SERVER_PORT=9500
+    ports:
+      - "9500:9500"
+
   zipkin:
     image: openzipkin/zipkin
     environment:
