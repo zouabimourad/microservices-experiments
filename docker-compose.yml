@@ -66,5 +66,3 @@ services:
       - "8083:8083"
     depends_on:
       - eureka
-      - product-service
-      - account-service

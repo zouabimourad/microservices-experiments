@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
-//@EnableFeignClients
 @EnableDiscoveryClient
 public class ProductServiceApplication {
 
@@ -13,8 +12,4 @@ public class ProductServiceApplication {
 		SpringApplication.run(ProductServiceApplication.class, args);
 	}
 
-//	@Bean
-//	public AlwaysSampler defaultSampler() {
-//		return new AlwaysSampler();
-//	}
 }
