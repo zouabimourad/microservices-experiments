@@ -6,27 +6,23 @@ import com.typesafe.service.order.common.AccountNotFoundException;
 import com.typesafe.service.order.common.ProductNotFoundException;
 import com.typesafe.service.order.controller.OrderDetailRequest;
 import com.typesafe.service.order.controller.OrderRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 @Slf4j
 public class OrderService {
 
-    final OrderServiceDelegate orderServiceDelegate;
+    private final OrderServiceDelegate orderServiceDelegate;
 
     List<Order> orders = new ArrayList<>();
-
-    @Autowired
-    public OrderService(OrderServiceDelegate orderServiceDelegate) {
-        this.orderServiceDelegate = orderServiceDelegate;
-    }
 
     public void process(OrderRequest orderRequest) throws AccountNotFoundException, ProductNotFoundException {
 
@@ -38,7 +34,6 @@ public class OrderService {
 
         for (OrderDetailRequest orderDetailRequest : orderRequest.getDetails()) {
             Product  product = orderServiceDelegate.getProductDetails(orderDetailRequest.getProductCode()).orElseThrow(ProductNotFoundException::new);
-
 
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setProductCode(orderDetailRequest.getProductCode());

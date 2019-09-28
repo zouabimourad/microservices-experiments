@@ -1,8 +1,8 @@
 package com.typesafe.service.product;
 
 import com.typesafe.common.Product;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,20 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @Slf4j
 public class ProductController {
 
-    final ProductService productService;
-
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+    private final ProductService productService;
 
     @GetMapping("/{code}")
     public @ResponseBody
-    ResponseEntity<Product> product(@PathVariable String code) {
+    ResponseEntity<Product> getByCode(@PathVariable String code) {
         return productService.findByCode(code)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -32,7 +28,7 @@ public class ProductController {
 
     @GetMapping()
     public @ResponseBody
-    ResponseEntity<List<Product>> procut() {
+    ResponseEntity<List<Product>> getAll() {
         return ResponseEntity.ok(productService.findAll());
     }
 }

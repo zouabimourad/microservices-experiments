@@ -17,36 +17,47 @@ buildscript {
 
 subprojects {
 
-	apply plugin: 'java'
-	apply plugin: 'maven-publish'
-	apply plugin: "io.spring.dependency-management"
 
-	group = 'com.typesafe.microservices-experiments'
-	version = '0.0.1-SNAPSHOT'
+}
 
-	sourceCompatibility = 1.8
+configure([project(':common'),
+           project(':order-service'),
+           project(':product-service'),
+           project(':account-service'),
+           project(':zuul'),
+           project(':eureka'),
+           project(':hystrix-dashboard')]) {
 
-	repositories {
-		mavenCentral()
-	}
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: "io.spring.dependency-management"
 
-	dependencyManagement {
-		imports {
-			mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
-		}
-	}
+    group = 'com.typesafe.microservices-experiments'
+    version = '0.0.1-SNAPSHOT'
 
-	publishing {
-		publications {
-			maven(MavenPublication) {
-				from components.java
-			}
-		}
+    sourceCompatibility = 1.8
 
-		repositories{
-			mavenLocal()
-		}
-	}
+    repositories {
+        mavenCentral()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        }
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+            }
+        }
+
+        repositories{
+            mavenLocal()
+        }
+    }
 
 }
 

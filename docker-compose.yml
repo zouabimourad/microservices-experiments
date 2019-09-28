@@ -1,20 +1,22 @@
-version: '2'
+version: '3.4'
+
+x-eureka-environment: &eureka-environment
+  EUREKA_HOST: eureka
+  EUREKA_PORT: 8761
 
 services:
 
   eureka:
     image: microservices-experiments/eureka:0.0.1-SNAPSHOT
     environment:
-      - EUREKA_HOST=eureka
-      - EUREKA_PORT=8761
+      <<: *eureka-environment
     ports:
       - "8761:8761"
 
   zuul:
     image: microservices-experiments/zuul:0.0.1-SNAPSHOT
     environment:
-      - EUREKA_HOST=eureka
-      - EUREKA_PORT=8761
+      <<: *eureka-environment
     ports:
       - "8080:8080"
     depends_on:
@@ -23,7 +25,7 @@ services:
   hystrix-dashboard:
     image: microservices-experiments/hystrix-dashboard:0.0.1-SNAPSHOT
     environment:
-      - SERVER_PORT=9500
+      SERVER_PORT: 9500
     ports:
       - "9500:9500"
 
@@ -37,32 +39,23 @@ services:
   product-service:
     image: microservices-experiments/product-service:0.0.1-SNAPSHOT
     environment:
-      - EUREKA_HOST=eureka
-      - EUREKA_PORT=8761
-      - SERVER_PORT=8081
-    ports:
-      - "8081:8081"
+      <<: *eureka-environment
+      SERVER_PORT: 8081
     depends_on:
       - eureka
 
   account-service:
     image: microservices-experiments/account-service:0.0.1-SNAPSHOT
     environment:
-      - EUREKA_HOST=eureka
-      - EUREKA_PORT=8761
-      - SERVER_PORT=8082
-    ports:
-      - "8082:8082"
+      <<: *eureka-environment
+      SERVER_PORT: 8082
     depends_on:
       - eureka
 
   order-service:
     image: microservices-experiments/order-service:0.0.1-SNAPSHOT
     environment:
-      - EUREKA_HOST=eureka
-      - EUREKA_PORT=8761
-      - SERVER_PORT=8083
-    ports:
-      - "8083:8083"
+      <<: *eureka-environment
+      SERVER_PORT: 8083
     depends_on:
       - eureka

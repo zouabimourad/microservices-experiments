@@ -1,23 +1,31 @@
-# microservices-experiments
+# Microservices experiments
 
 ## Description
-Example project with Spring Boot, Zuul, Eureka, Ribbon, Hystrix, Sleuth and Zipkin 
+Example project with Spring Boot, Zuul, Eureka, Ribbon, Hystrix, Sleuth, Zipkin and Angular Frontend
 
 ## Build
-`./gradlew clean build buildDocker`
+```bash
+./gradlew clean build buildDocker
+```
 
 ## Run
-`docker-compose up`
+```bash
+docker-compose up
+```
 
+## Frontend
+```bash
+cd front
+ng serve --proxy-config proxy.conf.json
+```
 
-**Eureka Console** : http://localhost:8761
+## Use
 
-**Zipkin Console** : http://localhost:9411
+### Frontend
 
-**Hystrix Dashboard Console (monitoring order-service hystrix stream)** : http://localhost:9500/hystrix/monitor?stream=http%3A%2F%2Forder-service%3A8083%2Factuator%2Fhystrix.stream
+http://localhost:4200/#/products
 
-## Test
-
+### Endpoint call
 ```bash
 curl --header "Content-Type: application/json" \
   --request POST \
@@ -25,4 +33,10 @@ curl --header "Content-Type: application/json" \
   http://localhost:8080/rest/order
 ```
 
+### Misc
 
+**Eureka Console** : http://localhost:8761
+
+**Zipkin Console** : http://localhost:9411
+
+**Hystrix Dashboard Console (monitoring order-service hystrix stream)** : http://localhost:9500/hystrix/monitor?stream=http%3A%2F%2Forder-service%3A8083%2Factuator%2Fhystrix.stream
