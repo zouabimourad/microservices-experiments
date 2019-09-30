@@ -1,7 +1,7 @@
 # Microservices experiments
 
 ## Description
-Example project with Spring Boot, Zuul, Eureka, Ribbon, Hystrix, Sleuth, Zipkin and Angular Frontend
+Example project with Spring Boot, Zuul 1 or Spring Cloud Gateway, Eureka, Ribbon, Hystrix, Sleuth, Zipkin and Angular Frontend
 
 ## Build
 ```bash

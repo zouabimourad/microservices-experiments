@@ -1,0 +1,35 @@
+
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: spring-cloud-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/rest/product/**
+
+        - id: account-service
+          uri: lb://account-service
+          predicates:
+            - Path=/rest/account/**
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/rest/order/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+    register-with-eureka: false
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000

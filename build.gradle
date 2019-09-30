@@ -1,7 +1,7 @@
 buildscript {
 
 	ext {
-		springBootVersion = '2.0.8.RELEASE'
+		springBootVersion = '2.1.8.RELEASE'
 	}
 
 	repositories {
@@ -25,6 +25,7 @@ configure([project(':common'),
            project(':product-service'),
            project(':account-service'),
            project(':zuul'),
+		   project(':spring-cloud-gateway'),
            project(':eureka'),
            project(':hystrix-dashboard')]) {
 
@@ -65,6 +66,7 @@ configure([project(':order-service'),
 		   project(':product-service'),
 		   project(':account-service'),
 		   project(':zuul'),
+		   project(':spring-cloud-gateway'),
 		   project(':eureka'),
 		   project(':hystrix-dashboard')]) {
 
@@ -72,7 +74,7 @@ configure([project(':order-service'),
 	apply plugin: "docker"
 
 	ext {
-		springCloudVersion = 'Finchley.RELEASE'
+		springCloudVersion = 'Greenwich.SR3'
 	}
 
 	dependencyManagement {
