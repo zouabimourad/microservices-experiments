@@ -13,8 +13,17 @@ services:
     ports:
       - "8761:8761"
 
-  zuul:
-    image: microservices-experiments/zuul:0.0.1-SNAPSHOT
+#  zuul:
+#    image: microservices-experiments/zuul:0.0.1-SNAPSHOT
+#    environment:
+#      <<: *eureka-environment
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - eureka
+
+  spring-cloud-gateway:
+    image: microservices-experiments/spring-cloud-gateway:0.0.1-SNAPSHOT
     environment:
       <<: *eureka-environment
     ports:
@@ -35,6 +44,13 @@ services:
       - STORAGE_TYPE=mem
     ports:
       - "9411:9411"
+
+  authorization-server:
+    image: microservices-experiments/authorization-server:0.0.1-SNAPSHOT
+    environment:
+      SERVER_PORT: 8089
+    ports:
+      - "8089:8089"
 
   product-service:
     image: microservices-experiments/product-service:0.0.1-SNAPSHOT

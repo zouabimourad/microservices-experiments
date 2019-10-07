@@ -1,17 +1,17 @@
 buildscript {
 
-	ext {
-		springBootVersion = '2.1.8.RELEASE'
-	}
+    ext {
+        springBootVersion = '2.1.8.RELEASE'
+    }
 
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath("se.transmode.gradle:gradle-docker:1.2")
-	}
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("se.transmode.gradle:gradle-docker:1.2")
+    }
 
 }
 
@@ -21,11 +21,12 @@ subprojects {
 }
 
 configure([project(':common'),
+           project(':authorization-server'),
            project(':order-service'),
            project(':product-service'),
            project(':account-service'),
            project(':zuul'),
-		   project(':spring-cloud-gateway'),
+           project(':spring-cloud-gateway'),
            project(':eureka'),
            project(':hystrix-dashboard')]) {
 
@@ -55,48 +56,50 @@ configure([project(':common'),
             }
         }
 
-        repositories{
+        repositories {
             mavenLocal()
         }
     }
 
 }
 
-configure([project(':order-service'),
-		   project(':product-service'),
-		   project(':account-service'),
-		   project(':zuul'),
-		   project(':spring-cloud-gateway'),
-		   project(':eureka'),
-		   project(':hystrix-dashboard')]) {
+configure([
+        project(':authorization-server'),
+        project(':order-service'),
+        project(':product-service'),
+        project(':account-service'),
+        project(':zuul'),
+        project(':spring-cloud-gateway'),
+        project(':eureka'),
+        project(':hystrix-dashboard')]) {
 
-	apply plugin: 'org.springframework.boot'
-	apply plugin: "docker"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: "docker"
 
-	ext {
-		springCloudVersion = 'Greenwich.SR3'
-	}
+    ext {
+        springCloudVersion = 'Greenwich.SR3'
+    }
 
-	dependencyManagement {
-		imports {
-			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-		}
-	}
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
 
-	task buildDocker(type: Docker, dependsOn: build) {
+    task buildDocker(type: Docker, dependsOn: build) {
 
-		def projectName = "microservices-experiments"
-		def jarName = jar.baseName.toLowerCase()
-		maintainer = "zouabi.mourad@gmail.com"
+        def projectName = "microservices-experiments"
+        def jarName = jar.baseName.toLowerCase()
+        maintainer = "zouabi.mourad@gmail.com"
 
-		tag = "$projectName/$jarName"
-		dockerfile = file('./Dockerfile')
-		doFirst {
-			copy {
-				from jar
-				into stageDir
-			}
-		}
-	}
+        tag = "$projectName/$jarName"
+        dockerfile = file('./Dockerfile')
+        doFirst {
+            copy {
+                from jar
+                into stageDir
+            }
+        }
+    }
 
 }
